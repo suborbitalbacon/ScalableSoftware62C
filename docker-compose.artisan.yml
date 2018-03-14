@@ -1,0 +1,5 @@
+version: "3"
+services:
+  laravel:
+    command: ${DOCKER_COMPOSE_COMMAND}
+    working_dir: /app

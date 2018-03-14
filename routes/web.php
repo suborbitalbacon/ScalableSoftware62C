@@ -11,4 +11,7 @@
 |
 */
 
-Route::get('/show-restaurants', 'RestaurantController@showRestaurant');
+Route::get('/restaurants', 'RestaurantController@listRestaurants');
+Route::post('/restaurants', 'RestaurantController@createRestaurant');
+Route::put('/restaurants/{restaurant}', 'RestaurantController@updateRestaurant');
+Route::delete('/restaurants/{restaurant}', 'RestaurantController@deleteRestaurant');
