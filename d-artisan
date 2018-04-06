@@ -4,4 +4,3 @@ name=$(basename "$(pwd)")
 dockerName=$(echo "$name" | sed 's/ /-/g' | sed 's/\([a-z0-9]\)\([A-Z]\)/\1-\2/g' | tr '[:upper:]' '[:lower:]')
 
 DOCKER_COMPOSE_COMMAND="php artisan $@" docker-compose -f docker-compose.yml -f docker-compose.artisan.yml up --exit-code-from laravel
-# docker run --rm --tty --workdir /app --volume "$(pwd)":/app "$dockerName" php artisan $@
