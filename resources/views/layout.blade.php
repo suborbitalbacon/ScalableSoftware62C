@@ -2,8 +2,12 @@
 <html>
 <head>
     <title>Melbourne dining</title>
+
+    <link rel="stylesheet" href="/css/app.css">
 </head>
 <body>
-    @yield('body')
+    <div class="container my-4">
+        @yield('body')
+    </div>
 </body>
 </html>
