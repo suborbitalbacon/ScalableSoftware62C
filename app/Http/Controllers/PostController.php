@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\PostRequest;
 use App\Post;
 use Illuminate\Http\Request;
 
@@ -28,13 +29,9 @@ class PostController extends Controller
             ->with('resource', $post);
     }
 
-    public function save(Request $request, Post $post = null)
+    public function save(PostRequest $request, Post $post = null)
     {
-        $data = $this->validate($request, [
-            'restaurant_id' => 'required|exists:restaurants,id',
-            'user_id' => 'required|exists:users,id',
-            'content' => 'required|string',
-        ]);
+        $data = $request->all();
         save(Post::class, $post, $data);
         return $this->redirect();
     }

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Comment;
+use App\Http\Requests\CommentRequest;
 use Illuminate\Http\Request;
 
 class CommentController extends Controller
@@ -28,13 +29,9 @@ class CommentController extends Controller
             ->with('resource', $comment);
     }
 
-    public function save(Request $request, Comment $comment = null)
+    public function save(CommentRequest $request, Comment $comment = null)
     {
-        $data = $this->validate($request, [
-            'post_id' => 'required|exists:posts,id',
-            'user_id' => 'required|exists:users,id',
-            'content' => 'required|string',
-        ]);
+        $data = $request->all();
         save(Comment::class, $comment, $data);
         return $this->redirect();
     }

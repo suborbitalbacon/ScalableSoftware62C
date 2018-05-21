@@ -31,17 +31,7 @@ class RestaurantController extends Controller
 
     public function save(Request $request, Restaurant $restaurant = null)
     {
-        $data = $this->validate($request, [
-            'name' => 'required|string',
-            'phone' => 'required|string',
-            'address1' => 'required|string',
-            'address2' => 'nullable|string',
-            'suburb' => 'required|string',
-            'state' => 'required|string|max:3',
-            'seats' => 'required|integer|min:0',
-            'country_id' => 'required|integer|exists:countries,id',
-            'category_id' => 'required|integer|exists:categories,id',
-        ]);
+        $data = $request->all();
         save(Restaurant::class, $restaurant, $data);
         return $this->redirect();
     }
