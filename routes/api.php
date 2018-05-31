@@ -21,4 +21,16 @@ Route::namespace('Api')->group(function() {
     Route::apiResource('restaurants', 'RestaurantController');
     Route::apiResource('roles', 'RoleController');
     Route::apiResource('users', 'UserController');
+
+    //Test route
+    Route::get('restaurants/{restaurant}/posts', 'PostController@indexPostByRestaurant');
+
+    //Task 1.6 - FIX
+    Route::post('restaurants/{restaurant}/posts', 'PostController@storePostByRestaurant');
+    Route::put('restaurants/{restaurant}/posts/{post}', 'PostController@updatePostByRestaurant');
+    Route::delete('restaurants/{restaurant}/posts/{post}', 'PostController@deletePostByRestaurant');
+
+    //Task 1.9 - WORKING
+    Route::get('restaurantPostComments/{restaurant}', 'RestaurantController@showRestaurantByPostComment');
+
 });

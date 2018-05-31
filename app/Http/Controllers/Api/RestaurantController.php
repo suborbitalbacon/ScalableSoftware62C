@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\RestaurantRequest;
 use App\Restaurant;
+use App\Post;
 use Illuminate\Http\Request;
 
 class RestaurantController extends Controller
@@ -44,5 +45,23 @@ class RestaurantController extends Controller
     public function destroy(Restaurant $restaurant)
     {
         $restaurant->delete();
+    }
+
+    public function showRestaurantByPostComment(Restaurant $restaurant)
+    {
+        $data = Restaurant::with('posts', 'posts.comments')->find($restaurant->id);
+        return response()->json($data, 200);
+    }
+    public function showPostComment(Request $request)
+    {
+        $query = Restaurant::query();
+        if ($request->has('country')) {
+            $query->where('country_id', $request->has('country'));
+        }
+        if ($request->has('category')) {
+            $query->where('category_id', $request->has('category'));
+        }
+
+        return $query->get();
     }
 }
