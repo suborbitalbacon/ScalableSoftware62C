@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api;
 
+use App\Http\Controllers\Controller;
 use App\Http\Requests\PostRequest;
 use App\Post;
-use Illuminate\Http\Request;
 
 class PostController extends Controller
 {
@@ -12,33 +12,28 @@ class PostController extends Controller
 
     public function index()
     {
-        $posts = Post::all();
-        return $this->view('index')
-            ->with('resources', $posts);
+        return Post::all();
     }
 
-    public function show(Post $post = null)
+    public function show(Post $post)
     {
-        return $this->view('show')
-            ->with('resource', $post);
+        return $post;
     }
 
-    public function edit(Post $post = null)
+    public function store(PostRequest $request)
     {
-        return $this->view('edit')
-            ->with('resource', $post);
+        return $this->update($request);
     }
 
-    public function save(PostRequest $request, Post $post = null)
+    public function update(PostRequest $request, Post $post = null)
     {
         $data = $request->all();
         save(Post::class, $post, $data);
-        return $this->redirect();
+        return $post;
     }
 
     public function destroy(Post $post)
     {
         $post->delete();
-        return $this->redirect();
     }
 }

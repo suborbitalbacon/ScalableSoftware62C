@@ -1,8 +1,9 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api;
 
 use App\Country;
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
 class CountryController extends Controller
@@ -11,35 +12,30 @@ class CountryController extends Controller
 
     public function index()
     {
-        $categories = Country::all();
-        return $this->view('index')
-            ->with('resources', $categories);
+        return Country::all();
     }
 
     public function show(Country $country = null)
     {
-        return $this->view('show')
-            ->with('resource', $country);
+        return $country;
     }
 
-    public function edit(Country $country = null)
+    public function store(Request $request)
     {
-        return $this->view('edit')
-            ->with('resource', $country);
+        return $this->update($request);
     }
 
-    public function save(Request $request, Country $country = null)
+    public function update(Request $request, Country $country = null)
     {
         $data = $this->validate($request, [
             'name' => 'required|string',
         ]);
         save(Country::class, $country, $data);
-        return $this->redirect();
+        return $country;
     }
 
     public function destroy(Country $country)
     {
         $country->delete();
-        return $this->redirect();
     }
 }

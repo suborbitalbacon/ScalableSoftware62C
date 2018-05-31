@@ -1,7 +1,9 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api;
 
+use App\Http\Controllers\Controller;
+use App\Http\Requests\RestaurantRequest;
 use App\Restaurant;
 use Illuminate\Http\Request;
 
@@ -11,34 +13,28 @@ class RestaurantController extends Controller
 
     public function index()
     {
-        $restaurants = Restaurant::all();
-        return $this->view('index')
-            ->with('resources', $restaurants);
+        return Restaurant::all();
     }
 
     public function show(Restaurant $restaurant = null)
     {
-        return $this->view('show')
-            ->with('resource', $restaurant);
+        return $restaurant;
     }
 
-    public function edit(Restaurant $restaurant = null)
+    public function store(RestaurantRequest $request)
     {
-        return $this->view('edit')
-            ->with($this->defaults())
-            ->with('resource', $restaurant);
+        return $this->update($request);
     }
 
-    public function save(Request $request, Restaurant $restaurant = null)
+    public function update(RestaurantRequest $request, Restaurant $restaurant = null)
     {
         $data = $request->all();
         save(Restaurant::class, $restaurant, $data);
-        return $this->redirect();
+        return $restaurant;
     }
 
     public function destroy(Restaurant $restaurant)
     {
         $restaurant->delete();
-        return redirect($this->baseUrl);
     }
 }

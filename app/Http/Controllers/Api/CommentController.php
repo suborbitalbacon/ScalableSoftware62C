@@ -1,8 +1,9 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api;
 
 use App\Comment;
+use App\Http\Controllers\Controller;
 use App\Http\Requests\CommentRequest;
 use Illuminate\Http\Request;
 
@@ -12,33 +13,28 @@ class CommentController extends Controller
 
     public function index()
     {
-        $comments = Comment::all();
-        return $this->view('index')
-            ->with('resources', $comments);
+        return Comment::all();
     }
 
     public function show(Comment $comment = null)
     {
-        return $this->view('show')
-            ->with('resource', $comment);
+        return $comment;
     }
 
-    public function edit(Comment $comment = null)
+    public function store(CommentRequest $request)
     {
-        return $this->view('edit')
-            ->with('resource', $comment);
+        return $this->update($request);
     }
 
-    public function save(CommentRequest $request, Comment $comment = null)
+    public function update(CommentRequest $request, Comment $comment = null)
     {
         $data = $request->all();
         save(Comment::class, $comment, $data);
-        return $this->redirect();
+        return $comment;
     }
 
     public function destroy(Comment $comment)
     {
         $comment->delete();
-        return $this->redirect();
     }
 }

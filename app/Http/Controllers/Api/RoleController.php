@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api;
 
+use App\Http\Controllers\Controller;
 use App\Role;
 use Illuminate\Http\Request;
 
@@ -11,35 +12,30 @@ class RoleController extends Controller
 
     public function index()
     {
-        $roles = Role::all();
-        return $this->view('index')
-            ->with('resources', $roles);
+        return Role::all();
     }
 
     public function show(Role $role = null)
     {
-        return $this->view('show')
-            ->with('resource', $role);
+        return $role;
     }
 
-    public function edit(Role $role = null)
+    public function store(Request $request)
     {
-        return $this->view('edit')
-            ->with('resource', $role);
+        return $this->update($request);
     }
 
-    public function save(Request $request, Role $role = null)
+    public function update(Request $request, Role $role = null)
     {
         $data = $this->validate($request, [
             'name' => 'required|string',
         ]);
         save(Role::class, $role, $data);
-        return $this->redirect();
+        return $role;
     }
 
     public function destroy(Role $role)
     {
         $role->delete();
-        return $this->redirect();
     }
 }

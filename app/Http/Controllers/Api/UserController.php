@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api;
 
+use App\Http\Controllers\Controller;
 use App\User;
 use Illuminate\Http\Request;
 
@@ -11,24 +12,20 @@ class UserController extends Controller
 
     public function index()
     {
-        $categories = User::all();
-        return $this->view('index')
-            ->with('resources', $categories);
+        return User::all();
     }
 
     public function show(User $user = null)
     {
-        return $this->view('show')
-            ->with('resource', $user);
+        return $user;
     }
 
-    public function edit(User $user = null)
+    public function store(Request $request)
     {
-        return $this->view('edit')
-            ->with('resource', $user);
+        return $this->update($request);
     }
 
-    public function save(Request $request, User $user = null)
+    public function update(Request $request, User $user = null)
     {
         $data = $this->validate($request, [
             'name' => 'required|string',
@@ -40,12 +37,11 @@ class UserController extends Controller
         $roles = partition('roles', $data);
         $user = save(User::class, $user, $data);
         $user->roles()->sync($roles);
-        return $this->redirect();
+        return $user;
     }
 
     public function destroy(User $user)
     {
         $user->delete();
-        return $this->redirect();
     }
 }

@@ -1,8 +1,9 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api;
 
 use App\Category;
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
 class CategoryController extends Controller
@@ -11,36 +12,30 @@ class CategoryController extends Controller
 
     public function index()
     {
-        $categories = Category::all();
-        return $this->view('index')
-            ->with('resources', $categories);
+        return Category::all();
     }
 
     public function show(Category $category = null)
     {
-        return $this->view('show')
-            ->with('resource', $category);
+        return $category;
     }
 
-    public function edit(Category $category = null)
+    public function store(Request $request)
     {
-        return $this->view('edit')
-            ->with('resource', $category);
+        return $this->update($request);
     }
 
-    public function save(Request $request, Category $category = null)
+    public function update(Request $request, Category $category = null)
     {
         $data = $this->validate($request, [
             'name' => 'required|string',
         ]);
         save(Category::class, $category, $data);
-        return $this->redirect();
+        return $category;
     }
 
     public function destroy(Category $category)
     {
-        return '';
-//        $category->delete();
-//        return $this->redirect();
+        $category->delete();
     }
 }
