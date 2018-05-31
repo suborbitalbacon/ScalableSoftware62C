@@ -4,7 +4,7 @@ $multiple = isset($multiple) && $multiple ? 'multiple' : '';
 ?>
 
 @component('inputs.layout', [ 'label' => $label ])
-    @if(is_array($value))
+    @if(is_array($value) || $value instanceof \Illuminate\Support\Collection)
         @foreach($value as $item)
             <span class="badge badge-primary">{{ $item->name }}</span>
         @endforeach

@@ -20,4 +20,13 @@
             </li>
         @endforeach
     </ul>
+
+    <br>
+    <h2>Post a comment</h2>
+    <form action="/comments" method="post">
+        <input type="hidden" name="post_id" value="{{ $resource->id }}">
+        @include('inputs.select.user')
+        @include('inputs.textarea', [ 'name' => 'content', 'value' => '' ])
+        <button class="btn btn-primary float-right" type="submit">Post</button>
+    </form>
 @endsection

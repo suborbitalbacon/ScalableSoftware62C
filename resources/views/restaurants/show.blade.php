@@ -32,4 +32,13 @@
             </li>
         @endforeach
     </ul>
+
+    <br>
+    <h2>Make a post</h2>
+    <form action="/posts" method="post">
+        <input type="hidden" name="restaurant_id" value="{{ $resource->id }}">
+        @include('inputs.select.user', [ 'value' => '' ])
+        @include('inputs.textarea', [ 'name' => 'content', 'value' => '' ])
+        <button class="btn btn-primary float-right" type="submit">Post</button>
+    </form>
 @endsection
