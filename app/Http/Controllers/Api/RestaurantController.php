@@ -11,14 +11,22 @@ class RestaurantController extends Controller
 {
     protected $name = 'restaurants';
 
-    public function index()
+    public function index(Request $request)
     {
-        return Restaurant::all();
+        $query = Restaurant::query();
+        if ($request->has('country')) {
+            $query->where('country_id', $request->has('country'));
+        }
+        if ($request->has('category')) {
+            $query->where('category_id', $request->has('category'));
+        }
+
+        return $query->get();
     }
 
     public function show(Restaurant $restaurant = null)
     {
-        return $restaurant;
+        return $restaurant->load('postsWithComments');
     }
 
     public function store(RestaurantRequest $request)

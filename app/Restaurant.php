@@ -18,4 +18,8 @@ class Restaurant extends Model {
     public function posts() {
         return $this->hasMany(Post::class);
     }
+
+    public function postsWithComments() {
+        return $this->posts()->with('comments');
+    }
 }
